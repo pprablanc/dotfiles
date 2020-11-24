@@ -1,0 +1,5 @@
+# xprofile related
+export RADV_PERFTEST="aco"
+
+# set delay and repetition key rate
+xset r rate 250 30

@@ -1,0 +1,54 @@
+! Base16 Monokai
+! Scheme: Wimer Hazenberg (http://www.monokai.nl)
+
+#define base00 #000000
+#define base01 #449977
+#define base02 #80d6bd
+#define base03 #f8f35c
+#define base04 #80d6bd
+#define base05 #c6c6c6
+#define base06 #80d6bd
+#define base07 #acacac
+#define base08 #595959
+#define base09 #265e46
+#define base0A #6eb39a
+#define base0B #fbd752
+#define base0C #6eb39a
+#define base0D #8f8f8f
+#define base0E #6eb39a
+#define base0F #fdfdfd
+
+*.foreground:   base05
+#ifdef background_opacity
+*.background:   [background_opacity]base00
+#else
+*.background:   base00
+#endif
+*.cursorColor:  base05
+
+*.color0:       base00
+*.color1:       base01
+*.color2:       base02
+*.color3:       base03
+*.color4:       base04
+*.color5:       base05
+*.color6:       base06
+*.color7:       base07
+
+*.color8:       base08
+*.color9:       base09
+*.color10:      base0A
+*.color11:      base0B
+*.color12:      base0C
+*.color13:      base0D
+*.color14:      base0E
+*.color15:      base0F
+
+! Note: colors beyond 15 might not be loaded (e.g., xterm, urxvt),
+! use 'shell' template to set these if necessary
+*.color16:      base09
+*.color17:      base0F
+*.color18:      base01
+*.color19:      base02
+*.color20:      base04
+*.color21:      base06

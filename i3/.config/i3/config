@@ -1,0 +1,350 @@
+# i3 config file (v4)
+#
+# Please see https://i3wm.org/docs/userguide.html for a complete reference!
+#
+##################################################################
+################# 0. Basic configurations    #####################
+################# 1. Graphics                #####################
+################# 2. Modes                   #####################
+################# 3. Keybindings             #####################
+################# 4. Application at start-up #####################
+##################################################################
+
+
+##################################################
+########## 0. Basic Configuration ################
+##################################################
+
+set $mod Mod4
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+
+##################################################
+############### 1. Graphics ######################
+##################################################
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+#font pango:Droid 12
+font xft:Droid Serif 10
+#font pango:Inconsolata Medium 10
+
+# Hide title bar
+default_border pixel 3
+default_floating_border pixel 3
+
+# Active border only when 2 tabs or more are opened
+smart_borders on
+
+# Active gaps only when 2 tabs or more are opened
+smart_gaps on
+
+# Set inner gaps 
+gaps inner 10 
+
+# Set outer gaps
+gaps outer 14 
+
+# Colors from Xresource
+set_from_resource $fg i3wm.color0 #f0f0f0
+set_from_resource $bg i3wm.color4 #f0f0f0
+set_from_resource $bd i3wm.color2 #ffffff
+set_from_resource $active i3wm.color2 #f0f0f0
+set_from_resource $inactive i3wm.color0 #f0f0f0
+set $tx #ffffff
+
+set $red #ff0000
+set $green #00ff00
+set $blue #0000ff
+#                               border          background      text            indicator       child-border
+client.focused         		      $bg		          $bg		          $tx		          $active         $active
+client.unfocused       		      $bd		          $bd		          $tx		          $inactive       $inactive
+client.focused_inactive		      $bd		          $bd		          $tx		          $inactive       $inactive
+client.urgent	        	        $tx		          $tx		          $tx		          $tx             $tx
+client.placeholder      	      $tx		          $tx		          $tx		          $tx             $tx
+
+hide_edge_borders both
+
+# Move applications to scratchpad 
+for_window [class="KeePassXC"] move scratchpad
+
+# Open applications in floating windows
+for_window [class="GrandOrgue"] floating enable
+for_window [class="Galculator"] floating enable
+
+##################################################
+################# 2. Modes #######################
+##################################################
+
+set $mode_gaps Gaps: (o) outer, (i) inner, (d) default
+set $mode_gaps_outer Outer Gaps: +|-|0 (1px), Shift + +|-|0 (5px)
+set $mode_gaps_inner Inner Gaps: +|-|0 (1px), Shift + +|-|0 (5px)
+
+mode "$mode_gaps" {
+        bindsym o      mode "$mode_gaps_outer"
+        bindsym i      mode "$mode_gaps_inner"
+        bindsym d      gaps inner all set 10, gaps outer all set 14
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+ 
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym h  resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 1
+        bindsym minus gaps inner current minus 1
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner current plus 5
+        bindsym Shift+minus gaps inner current minus 5
+        bindsym Shift+0     gaps inner current set 0
+
+        bindsym Return mode "$mode_gaps"
+        bindsym Escape mode "$mode_gaps"
+}
+
+mode "$mode_gaps_outer" {
+        bindsym plus  gaps outer current plus 1
+        bindsym minus gaps outer current minus 1
+        bindsym 0     gaps outer current set 0
+
+        bindsym Shift+plus  gaps outer current plus 5
+        bindsym Shift+minus gaps outer current minus 5
+        bindsym Shift+0     gaps outer current set 0
+
+        bindsym Return mode "$mode_gaps"
+        bindsym Escape mode "$mode_gaps"
+}
+
+
+set $mode_system (r)eboot, (p)oweroff, (l)ock, (s)uspend
+mode "$mode_system" {
+    	bindsym r exec --no-startup-id reboot, mode "default"
+    	bindsym p exec --no-startup-id poweroff, mode "default"
+		bindsym --release l exec --no-startup-id "slock", mode "default"
+    	bindsym --release s exec --no-startup-id "systemctl suspend", mode "default"
+
+    	# exit system mode: "Enter" or "Escape"
+    	bindsym Return mode "default"
+    	bindsym Escape mode "default"
+}
+
+##################################################
+################## 3. Keybindings ################
+##################################################
+
+# System mode, reboot/poweroff/lock
+bindsym $mod+p mode "$mode_system"
+
+# start a terminal
+bindsym $mod+Return exec i3-sensible-terminal
+
+# kill focused window
+#bindsym $mod+Shift+q kill
+bindsym XF86Tools kill
+
+# There also is the (new) i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that
+# installed.
+# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+bindsym Mod1+Tab focus right
+bindsym Mod1+Shift+Tab focus left
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# split in horizontal orientation
+bindsym $mod+semicolon split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# split toggle
+bindsym $mod+q split toggle
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+#bindsym $mod+s layout stacking
+#bindsym $mod+w layout tabbed
+#bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+#bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+# move the curently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the first scratchpad window
+bindsym $mod+minus scratchpad show
+
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+assign [class="Steam"] $ws1
+assign [class="qutebrowser"] $ws2
+assign [class="firefox"] $ws2
+assign [class="Spyder"] $ws3
+assign [class="Thunderbird"] $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# gaps mode
+bindsym $mod+g mode "$mode_gaps"
+
+# resize mode
+bindsym $mod+r mode "resize"
+
+# start dmenu (a program launcher)
+#bindsym $mod+d exec dmenu_run
+#bindsym $mod+d exec rofi -show run -lines 5 -eh 2 -width 100 -padding 500 -opacity "50" -bw 0 -bc "$black" -bg "$black" -fg "$text-color" -hlbg "$black" -hlfg "$black" -font "menlo 14"
+bindsym $mod+d exec rofi -show run 
+bindsym $mod+c exec rofi -show combi
+bindsym $mod+Tab exec rofi -show window
+
+# brightness control 
+bindsym XF86MonBrightnessUp exec --no-startup-id light -A 5
+bindsym XF86MonBrightnessDown exec --no-startup-id light -U 5
+bindsym Control+XF86MonBrightnessUp exec --no-startup-id light -A 20
+bindsym Control+XF86MonBrightnessDown exec --no-startup-id light -U 20
+
+# keyboard sound control
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer sset Master 3%+
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer sset Master 3%-
+bindsym Control+XF86AudioRaiseVolume exec --no-startup-id amixer sset Master 10%+
+bindsym Control+XF86AudioLowerVolume exec --no-startup-id amixer sset Master 10%-
+bindsym XF86AudioMute exec --no-startup-id amixer sset Master toggle
+
+# mouse sound control
+bindsym --whole-window button7 exec --no-startup-id amixer sset Master 3%+
+bindsym --whole-window button6 exec --no-startup-id amixer sset Master 3%-
+
+# binding keys to lock the session
+bindsym $mod+shift+x exec i3lock -i $wp_lock
+
+# Other bindings
+bindsym XF86Explorer exec thunar
+bindsym $mod+Print exec flameshot gui --path ~/screenshots/
+
+
+##################################################
+############ 4. Application at start up ##########
+##################################################
+
+# graphics
+exec_always --no-startup-id ~/.config/wpg/wp_init.sh
+exec_always --no-startup-id picom
+exec_always --no-startup-id ~/.config/polybar/launch.sh
+
+# Keyboard
+exec_always --no-startup-id setxkbmap -layout us -variant intl -option ctrl:nocaps
+exec_always --no-startup-id pkill xcape
+exec_always --no-startup-id "xset r rate 250 30"
+#exec_always --no-startup-id "sleep 1; xmodmap ~/.Xmodmap"
+#exec_always --no-startup-id "sleep 2; xcape -t 200 -e 'Hyper_L=backslash'"
+
+# applications
+exec --no-startup-id keepassxc
+exec --no-startup-id thunderbird
+exec --no-startup-id "sleep 3; psensor"
+exec --no-startup-id redshift-gtk
+#exec --no-startup-id blueman-applet
+

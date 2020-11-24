@@ -1,0 +1,49 @@
+!To apply change in configuration file type:
+!xrdb .Xresources
+
+#include "/home/pierre/Xresources-themes/user.Xresources"
+!#include "/home/pierre/Xresources-themes/base16-monokai-256.Xresources"
+!#include "/home/pierre/Xresources-themes/base16-ocean.Xresources"
+
+
+! xft
+!Xft.autohint: 0
+!Xft.lcdfilter: lcddefault
+!Xft.hintstyle: hintslight
+!Xft.hinting: 1
+!Xft.antialias: 1
+!Xft.rgba: rgb
+!Xcursor.size: 16
+
+! Urxvt
+
+!URxvt.font: xft:iosevka:italic:size=12
+!URxvt.font: xft:menlo:regular:size=12
+URxvt.font: xft:Menlo\ for\ Powerline:regular:size=12
+!Replace the line above by the line below when the screen will have a better resolution
+!URxvt.font: xft:menlo:regular:antialias=true:hinting=true:size=10
+
+URxvt.iso14755:	false
+URxvt.iso14755_52: false
+URxvt.internalBorder: 5 
+URxvt.letterSpace: -1
+URxvt*scrollBar: false
+
+URxvt.perl-ext:
+URxvt.perl-ext-common:
+
+! Rofi
+rofi.font: menlo regular 12
+!rofi.modi: run
+!rofi.color-enabled: true
+!rofi.padding: 5
+!rofi.location: 0
+!rofi.fuzzy: true
+!rofi.separator-style: solid
+!rofi.hide-scrollbar: true
+!rofi.show-icons:true
+
+
+!Configuration du terminal
+!Couleurs, police, Powerline (si police patche), etc...
+
